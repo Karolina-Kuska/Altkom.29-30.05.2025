@@ -134,5 +134,34 @@ namespace ConsoleApp
             order.Products.Remove(product1);
             Console.WriteLine(context.ChangeTracker.DebugView.LongView);
         }
+
+        public static void ChangedNotification(DbContextOptions<Context> options)
+        {
+            using var context = new Context(options)
+            {
+                ChangeTracker = { AutoDetectChangesEnabled = false }
+            };
+
+            var order = new Order { Name = "Zamówienie #15" };
+            order.Name = "Zamówienie #15";
+            var product1 = new Product { Price = 1, Name = "Produkt #1" };
+            order.Products.Add(product1);
+
+            context.Add(order);
+            Console.WriteLine(context.ChangeTracker.DebugView.LongView);
+
+            context.SaveChanges();
+
+            Console.WriteLine(context.ChangeTracker.DebugView.LongView);
+
+            order.Name = "Zamówienie #15 - zmodyfikowane";
+            order.OrderDate = DateTime.Now.AddDays(-1);
+            Console.WriteLine(context.ChangeTracker.DebugView.LongView);
+            order.Products.Remove(product1);
+            Console.WriteLine(context.ChangeTracker.DebugView.LongView);
+
+
+            context.SaveChanges();
+        }
     }
 }

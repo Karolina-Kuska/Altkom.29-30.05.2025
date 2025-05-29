@@ -1,7 +1,17 @@
-﻿namespace Models
+﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
+
+namespace Models
 {
-    public abstract class Entity
+    public abstract class Entity : INotifyPropertyChanged
     {
-        public virtual int Id { get; set; }
+        public int Id { get; set; }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }
