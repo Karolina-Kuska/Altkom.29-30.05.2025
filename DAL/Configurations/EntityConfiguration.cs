@@ -10,6 +10,10 @@ namespace DAL.Configurations
         {
             //towrzenie shadow properties
             builder.Property<DateTime>("CreatedAt").HasDefaultValueSql("GETDATE()");
+
+            builder.Property<bool>("IsDeleted");
+
+            builder.HasQueryFilter(e => !EF.Property<bool>(e, "IsDeleted"));
         }
     }
 }

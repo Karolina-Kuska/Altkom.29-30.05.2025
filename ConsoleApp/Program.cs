@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using DAL;
 using ConsoleApp;
+using Models;
 
 var config = new DbContextOptionsBuilder<Context>()
     .UseSqlServer("Server=(local);Database=ef;Integrated Security=true;TrustServerCertificate=True;");
@@ -17,4 +18,6 @@ using ( var context = new Context(config.Options))
 
 //ConcurrencyCheck.Run(config);
 
-ShadowProperty.Run(config);
+//ShadowProperty.Run(config);
+
+GlobalFilters.Run(config);
