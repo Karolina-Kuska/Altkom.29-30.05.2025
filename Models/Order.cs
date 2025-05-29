@@ -20,6 +20,6 @@ namespace Models
         //odpowiednik IsConcurrencyToken w konfiguracji 
         //[ConcurrencyCheck]
         public DateTime OrderDate { get; set; } = DateTime.Now;
-        public ICollection<Product> Products { get; set; } = new ObservableCollection<Product>();
+        public virtual ICollection<Product> Products { get; set; } = new ObservableCollection<Product>();
     }
 }

@@ -22,4 +22,6 @@ using ( var context = new Context(config.Options))
 
 //GlobalFilters.Run(config);
 
-Transactions.Run(config);
+//Transactions.Run(config);
+
+RelatedData.Run(config);
