@@ -9,7 +9,7 @@ namespace Models
 
         //shadow property - właściwość, która nie jest mapowana do bazy danych, ale jest używana w kontekście EF Core
         //public int OrderId { get; set; }
-        public Order Order { get; set; }
+        public Order? Order { get; set; }
 
         //odpowiednik IsRowVersion w konfiguracji
         //[Timestamp]
