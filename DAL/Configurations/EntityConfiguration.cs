@@ -8,7 +8,8 @@ namespace DAL.Configurations
     {
         public virtual void Configure(EntityTypeBuilder<T> builder)
         {
-
+            //towrzenie shadow properties
+            builder.Property<DateTime>("CreatedAt").HasDefaultValueSql("GETDATE()");
         }
     }
 }

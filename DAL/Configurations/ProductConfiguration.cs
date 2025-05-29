@@ -11,7 +11,8 @@ namespace DAL.Configurations
 
             builder.HasOne(x => x.Order).WithMany(x => x.Products).IsRequired();
 
-            builder.Property(x => x.Timestamp).IsRowVersion();
+            builder.Property<byte[]>("Timestamp").IsRowVersion();
+
         }
     }
 }
