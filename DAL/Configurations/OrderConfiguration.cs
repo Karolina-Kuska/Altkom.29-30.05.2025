@@ -9,6 +9,8 @@ namespace DAL.Configurations
         {
             base.Configure(builder);
 
+            //concurrency token - zabezpiecza przed konfliktami tylko wskazane właściwości
+            builder.Property(x => x.OrderDate).IsConcurrencyToken();
         }
     }
 }

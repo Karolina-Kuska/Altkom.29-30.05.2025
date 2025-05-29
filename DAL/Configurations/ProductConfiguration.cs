@@ -10,6 +10,8 @@ namespace DAL.Configurations
             base.Configure(builder);
 
             builder.HasOne(x => x.Order).WithMany(x => x.Products).IsRequired();
+
+            builder.Property(x => x.Timestamp).IsRowVersion();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace Models
 {
@@ -15,6 +16,9 @@ namespace Models
                 OnPropertyChanged();
             }
         }
+
+        //odpowiednik IsConcurrencyToken w konfiguracji 
+        //[ConcurrencyCheck]
         public DateTime OrderDate { get; set; } = DateTime.Now;
         public ICollection<Product> Products { get; set; } = new ObservableCollection<Product>();
     }

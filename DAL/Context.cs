@@ -27,8 +27,8 @@ namespace DAL
         {
             modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
 
-            //modelBuilder.HasChangeTrackingStrategy(ChangeTrackingStrategy.Snapshot); // Ustawienie domyślne strategii śledzenia zmian to Snapshot
-            modelBuilder.HasChangeTrackingStrategy(ChangeTrackingStrategy.ChangedNotifications); 
+            modelBuilder.HasChangeTrackingStrategy(ChangeTrackingStrategy.Snapshot); // Ustawienie domyślne strategii śledzenia zmian to Snapshot
+            //modelBuilder.HasChangeTrackingStrategy(ChangeTrackingStrategy.ChangedNotifications); 
 
             base.OnModelCreating(modelBuilder);
         }
