@@ -2,9 +2,9 @@
 {
     public class Product : Entity
     {
-        public string Name { get; set; } = string.Empty;
-        public decimal Price { get; set; } = 0.0m;
-        public Order Order { get; set; }
+        public virtual string Name { get; set; } = string.Empty;
+        public virtual decimal Price { get; set; } = 0.0m;
+        public virtual Order Order { get; set; }
 
     }
 }

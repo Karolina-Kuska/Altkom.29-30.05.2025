@@ -105,5 +105,34 @@ namespace ConsoleApp
 
             context.SaveChanges();
         }
+
+
+        public static void TrackingProxies(DbContextOptionsBuilder<Context> options)
+        {
+            options.UseChangeTrackingProxies();
+
+            using var context = new Context(options.Options)
+            {
+                ChangeTracker = { AutoDetectChangesEnabled = false }
+            };
+
+            //var order = new Order { Name = "Zamówienie #15" };
+            var order = context.CreateProxy<Order>();
+            order.Name = "Zamówienie #15";
+            var product1 = context.CreateProxy<Product>(x => { x.Price = 1; x.Name = "Produkt #1"; });
+            order.Products.Add(product1);
+
+            context.Add(order);
+            Console.WriteLine(context.ChangeTracker.DebugView.LongView);
+
+            context.SaveChanges();
+
+            Console.WriteLine(context.ChangeTracker.DebugView.LongView);
+
+            order.Name = "Zamówienie #15 - zmodyfikowane";
+            Console.WriteLine(context.ChangeTracker.DebugView.LongView);
+            order.Products.Remove(product1);
+            Console.WriteLine(context.ChangeTracker.DebugView.LongView);
+        }
     }
 }
