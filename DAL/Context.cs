@@ -32,5 +32,17 @@ namespace DAL
 
             base.OnModelCreating(modelBuilder);
         }
+
+        public bool RandomFail { get; set; }
+
+        public override int SaveChanges()
+        {
+            if(RandomFail && Random.Shared.Next(1, 25) == 1)
+            {
+                throw new DbUpdateException("Losowy błąd podczas zapisu do bazy danych.");
+            }
+
+            return base.SaveChanges();
+        }
     }
 }

@@ -7,6 +7,9 @@ namespace Models
     {
         public int Id { get; set; }
 
+        //ShadowProperty
+        //public bool IsDeleted { get; set; }
+
         public event PropertyChangedEventHandler? PropertyChanged;
 
         protected void OnPropertyChanged([CallerMemberName] string propertyName = "")
