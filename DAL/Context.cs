@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
+using Models;
 
 namespace DAL
 {
@@ -15,6 +16,19 @@ namespace DAL
         public Context()
         {
         }
+
+
+        public static Func<Context, int, Product> GetProductsByDateTime { get; } =
+            EF.CompileQuery((Context context, int addDays) =>
+                context.Set<Product>()
+                        .Include(x => x.Order)
+                        .ThenInclude(x => x.Products)
+                        .Where(x => x.Id % 2 == 0)
+                        .Where(x => x.Order.Id % 2 != 0)
+                        .Where(x => x.Order.OrderDate < DateTime.Now.AddDays(addDays))
+                        .OrderByDescending(x => x.Order.OrderDate)
+                        .First()
+            );
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
