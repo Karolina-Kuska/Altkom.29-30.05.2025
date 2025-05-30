@@ -4,17 +4,19 @@ using DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using NetTopologySuite.Geometries;
 
 #nullable disable
 
 namespace DAL.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20250530114148_AddOrderSummaryView")]
+    partial class AddOrderSummaryView
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,10 +44,6 @@ namespace DAL.Migrations
                         .HasPrecision(5)
                         .HasColumnType("datetime2(5)")
                         .HasComputedColumnSql("GETDATE()");
-
-                    b.Property<Point>("DeliveryPoint")
-                        .IsRequired()
-                        .HasColumnType("geography");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -83,32 +81,13 @@ namespace DAL.Migrations
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("Models.OrderSummary", b =>
-                {
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("OrderDate")
-                        .HasPrecision(5)
-                        .HasColumnType("datetime2(5)");
-
-                    b.Property<float>("TotalValue")
-                        .HasColumnType("real");
-
-                    b.HasKey("Id");
-
-                    b.ToTable((string)null);
-
-                    b.ToView("View_OrderSummary", (string)null);
-                });
-
             modelBuilder.Entity("Models.Person", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("Key")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Key"));
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -135,7 +114,7 @@ namespace DAL.Migrations
                         .HasColumnType("datetime2(5)")
                         .HasColumnName("To");
 
-                    b.HasKey("Id");
+                    b.HasKey("Key");
 
                     b.ToTable("People");
 
@@ -216,59 +195,6 @@ namespace DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("OrderProducts", (string)null);
-                });
-
-            modelBuilder.Entity("Models.Person", b =>
-                {
-                    b.OwnsOne("Models.Address", "Address", b1 =>
-                        {
-                            b1.Property<int>("PersonId")
-                                .HasColumnType("int");
-
-                            b1.Property<string>("City")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.Property<int>("Number")
-                                .HasColumnType("int");
-
-                            b1.Property<string>("Street")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.HasKey("PersonId");
-
-                            b1.ToTable("People");
-
-                            b1.ToJson("Address");
-
-                            b1.WithOwner()
-                                .HasForeignKey("PersonId");
-
-                            b1.OwnsOne("Models.Coordinates", "Coordinates", b2 =>
-                                {
-                                    b2.Property<int>("AddressPersonId")
-                                        .HasColumnType("int");
-
-                                    b2.Property<float>("Latitude")
-                                        .HasColumnType("real");
-
-                                    b2.Property<float>("Longitude")
-                                        .HasColumnType("real");
-
-                                    b2.HasKey("AddressPersonId");
-
-                                    b2.ToTable("People");
-
-                                    b2.WithOwner()
-                                        .HasForeignKey("AddressPersonId");
-                                });
-
-                            b1.Navigation("Coordinates")
-                                .IsRequired();
-                        });
-
-                    b.Navigation("Address");
                 });
 
             modelBuilder.Entity("Models.Product", b =>

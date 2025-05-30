@@ -10,7 +10,10 @@ namespace ConsoleApp
         public static void Run(DbContextOptionsBuilder<Context> config, bool randomFail = true)
         {
             var products = Enumerable.Range(100, 50).Select(x => new Product { Name = $"Produkt #{x}", Price = x * 10.0m, ProductDetails = new ProductDetails { Depth = x * 0.1f, Height = x * 0.2f, Width = x * 0.3f, Weight = x * 0.4f } }).ToList();
-            var orders = Enumerable.Range(1, 5).Select(x => new Order { Name = $"Zamówienie #{x}", OrderDate = DateTime.Now.AddDays(3.21 * x), OrderType = (OrderType)(x % 3), Parameters = (Parameters)(x % 127) }).ToList();
+            var orders = Enumerable.Range(1, 5).Select(x => new Order { Tax = Random.Shared.NextSingle(), Value = Random.Shared.Next(100), 
+                Name = $"Zamówienie #{x}", OrderDate = DateTime.Now.AddDays(3.21 * x), 
+                OrderType = (OrderType)(x % 3), Parameters = (Parameters)(x % 127),
+                DeliveryPoint = new NetTopologySuite.Geometries.Point(51 + 0.1 * x, 19 - 0.1 * x) { SRID = 4326 } }).ToList();
 
             using var context = new Context(config.Options);
             context.RandomFail = randomFail;
