@@ -17,6 +17,8 @@ namespace DAL.Configurations
                 x.HasPeriodStart("From"); //Domyślnie: "PeriodStart"
                 x.UseHistoryTable("PeopleHistory"); //Domyślnie: "PersonHistory"
             }));
+
+            builder.Property(x => x.OptionalDescription).IsSparse();
         }
     }
 }
