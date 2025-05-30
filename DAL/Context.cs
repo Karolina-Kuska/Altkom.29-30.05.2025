@@ -61,6 +61,10 @@ namespace DAL
                     ((IMutableEntityType)x.DeclaringType).SetPrimaryKey(x);
                 });
 
+            //możemy wpływać na sposób dostępu do właściwości w modelu, np. preferując dostęp przez właściwości zamiast pól
+            modelBuilder.UsePropertyAccessMode(PropertyAccessMode.PreferProperty);
+            //domyślne ustawienie to PropertyAccessMode.FieldDuringConstruction, czyli dostęp przez pola podczas tworzenia obiektu, a potem przez właściwości
+            //modelBuilder.UsePropertyAccessMode(PropertyAccessMode.FieldDuringConstruction);
         }
 
         public bool RandomFail { get; set; }

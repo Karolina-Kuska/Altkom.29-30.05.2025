@@ -11,6 +11,9 @@ namespace DAL.Configurations
 
             //concurrency token - zabezpiecza przed konfliktami tylko wskazane właściwości
             builder.Property(x => x.OrderDate).IsConcurrencyToken();
+
+            //informujemy EF Core, że właściwość Name ma backing field o nazwie "orderName", czyli inny niż domyślnie generowany przez konwencje EF Core
+            builder.Property(x => x.Name).HasField("orderName");
         }
     }
 }
