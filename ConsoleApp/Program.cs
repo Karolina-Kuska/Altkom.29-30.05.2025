@@ -30,9 +30,10 @@ using ( var context = new Context(config.Options))
 
 //CompiledQuery.Run(config);
 
+Transactions.Run(config, false);
 using (var context = new Context(config.Options))
 {
-    var order = new Order { Name = "Test Order" };
+    var order = new Order { Name = "Test Order", Value = 123, Tax = 0.23f };
     context.Add(order);
     context.SaveChanges();
 
@@ -42,5 +43,5 @@ using (var context = new Context(config.Options))
 {
     var order = context.Set<Order>().FirstOrDefault(o => o.Name == "Test Order");
 
-    Console.WriteLine(order.Name);
+    Console.WriteLine($"Order Name: {order?.Name}, Value: {order?.Value}, Tax: {order?.Tax}, TotalValue: {order?.TotalValue}");
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Models;
 
 namespace DAL.Configurations
@@ -14,6 +15,11 @@ namespace DAL.Configurations
 
             //informujemy EF Core, że właściwość Name ma backing field o nazwie "orderName", czyli inny niż domyślnie generowany przez konwencje EF Core
             builder.Property(x => x.Name).HasField("orderName");
+
+            builder.Property(x => x.TotalValue).HasComputedColumnSql("[Value] * (1 + [Tax])", stored: true);
+
+            builder.Property<DateTime>("CurrentDate").HasComputedColumnSql("GETDATE()");
+            //builder.Property(x => x.IsExpired).HasComputedColumnSql("CASE WHEN [OrderDate] < GETDATE() THEN 1 ELSE 0 END");
         }
     }
 }
