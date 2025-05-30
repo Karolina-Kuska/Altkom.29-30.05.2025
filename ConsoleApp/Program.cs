@@ -33,9 +33,9 @@ using (var context = new Context(config.Options))
 
 //Views.Run(config);
 
-Spatial.Run(config);
+//Spatial.Run(config);
 
-
+Json.Run(config);
 
 
 static void Run(DbContextOptionsBuilder<Context> config)
