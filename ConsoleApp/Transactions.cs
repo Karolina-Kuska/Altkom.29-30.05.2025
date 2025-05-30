@@ -7,13 +7,13 @@ namespace ConsoleApp
     internal class Transactions
     {
 
-        public static void Run(DbContextOptionsBuilder<Context> config)
+        public static void Run(DbContextOptionsBuilder<Context> config, bool randomFail = true)
         {
             var products = Enumerable.Range(100, 50).Select(x => new Product { Name = $"Produkt #{x}", Price = x * 10.0m }).ToList();
             var orders = Enumerable.Range(1, 5).Select(x => new Order { Name = $"Zamówienie #{x}", OrderDate = DateTime.Now.AddDays(3.21 * x) }).ToList();
 
             using var context = new Context(config.Options);
-            context.RandomFail = true;
+            context.RandomFail = randomFail;
 
             using (var transaction = context.Database.BeginTransaction())
             {

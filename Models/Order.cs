@@ -5,14 +5,20 @@ namespace Models
 {
     public class Order : Entity
     {
-        private string _name = string.Empty;
+        // 3 na nazwę backing field dla właściwości, które są rozpoznawane przez wbudowane konwencje EF Core
+        //private string name = string.Empty;
+        //private string _name = string.Empty;
+        //private string m_name = string.Empty;
+
+
+        private string orderName = string.Empty;
 
         public string Name
         {
-            get => _name;
+            get => orderName;
             set
             {
-                _name = value;
+                orderName = value;
                 OnPropertyChanged();
             }
         }

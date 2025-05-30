@@ -24,4 +24,23 @@ using ( var context = new Context(config.Options))
 
 //Transactions.Run(config);
 
-RelatedData.Run(config);
+//RelatedData.Run(config);
+
+//TemporalTable.Run(config);
+
+//CompiledQuery.Run(config);
+
+using (var context = new Context(config.Options))
+{
+    var order = new Order { Name = "Test Order" };
+    context.Add(order);
+    context.SaveChanges();
+
+    context.ChangeTracker.Clear();
+}
+using (var context = new Context(config.Options))
+{
+    var order = context.Set<Order>().FirstOrDefault(o => o.Name == "Test Order");
+
+    Console.WriteLine(order.Name);
+}
