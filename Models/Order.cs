@@ -34,5 +34,8 @@ namespace Models
         //public float TotalValue => Value * (1 + Tax);
         public float TotalValue { get; }
         //public bool IsExpired { get; }
+
+        public OrderType OrderType { get; set; }
+        public Parameters Parameters { get; set; }
     }
 }

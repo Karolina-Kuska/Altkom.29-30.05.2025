@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Models;
 
 namespace DAL.Configurations
@@ -20,6 +21,13 @@ namespace DAL.Configurations
 
             builder.Property<DateTime>("CurrentDate").HasComputedColumnSql("GETDATE()");
             //builder.Property(x => x.IsExpired).HasComputedColumnSql("CASE WHEN [OrderDate] < GETDATE() THEN 1 ELSE 0 END");
+
+            /*builder.Property(x => x.OrderType).HasConversion(
+                x => x.ToString(),
+                x => Enum.Parse<OrderType>(x));*/
+            //builder.Property(x => x.OrderType).HasConversion(new EnumToStringConverter<OrderType>());
+            builder.Property(x => x.OrderType).HasConversion<string>();
+            builder.Property(x => x.Parameters).HasConversion<string>();
         }
     }
 }

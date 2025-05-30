@@ -1,7 +1,7 @@
 ﻿using DAL.Conventions;
+using DAL.Converters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using Models;
 
 namespace DAL
@@ -65,13 +65,20 @@ namespace DAL
             modelBuilder.UsePropertyAccessMode(PropertyAccessMode.PreferProperty);
             //domyślne ustawienie to PropertyAccessMode.FieldDuringConstruction, czyli dostęp przez pola podczas tworzenia obiektu, a potem przez właściwości
             //modelBuilder.UsePropertyAccessMode(PropertyAccessMode.FieldDuringConstruction);
+
+            modelBuilder.Model.GetEntityTypes()
+                .SelectMany(x => x.GetProperties())
+                .Where(x => x.ClrType == typeof(string))
+                .Where(x => x.PropertyInfo?.CanWrite ?? false)
+            .ToList()
+            .ForEach(x => x.SetValueConverter(new ObfuscationConverter()));
         }
 
         public bool RandomFail { get; set; }
 
         public override int SaveChanges()
         {
-            if(RandomFail && Random.Shared.Next(1, 25) == 1)
+            if (RandomFail && Random.Shared.Next(1, 25) == 1)
             {
                 throw new DbUpdateException("Losowy błąd podczas zapisu do bazy danych.");
             }
