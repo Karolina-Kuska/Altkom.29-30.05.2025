@@ -4,7 +4,7 @@ using ConsoleApp;
 using Models;
 
 var config = new DbContextOptionsBuilder<Context>()
-    .UseSqlServer("Server=(local);Database=ef;Integrated Security=true;TrustServerCertificate=True;");
+    .UseSqlServer("Server=(local);Database=ef;Integrated Security=true;TrustServerCertificate=True;", x => x.UseNetTopologySuite());
 
 using (var context = new Context(config.Options))
 {
@@ -31,9 +31,9 @@ using (var context = new Context(config.Options))
 //CompiledQuery.Run(config);
 
 
-Views.Run(config);
+//Views.Run(config);
 
-
+Spatial.Run(config);
 
 
 
